@@ -1,0 +1,105 @@
+FROM  nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
+MAINTAINER Jermine.hu@qq.com
+ARG PYTHON_VERSION=3.6
+ENV OPENCV_DIR /opt/opencv
+ENV LIBGPUARRAY_DIR /opt/libgpuarray
+ENV NUM_CORES 8
+ENV NB_UID 1000
+ENV CUDNN_VERSION 7
+ARG CLONE_TAG=1.0
+ENV OPENCV_VERSION=3.4.0
+ENV CUDA_ENABLED=ON
+ENV OPENCL_ENABLED=OFF
+
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        python3 python3-pip \
+        wget \
+        cmake \
+        g++ \
+        libopencv-dev \
+        protobuf-compiler \
+        unzip \
+        x264 \
+       # zlib1g-dev \
+        && \
+    apt-get autoremove && apt-get autoclean ;\
+    rm -rf /var/lib/apt/lists/*
+
+# build and install opencv
+RUN mkdir -p /src && \
+    cd /src && \
+    mkdir -p $OPENCV_DIR && \
+    wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip && \
+    unzip $OPENCV_VERSION.zip && \
+    mv /src/opencv-$OPENCV_VERSION/ $OPENCV_DIR/ && \
+    rm -rf /src/$OPENCV_VERSION.zip && \
+    wget https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.zip -O $OPENCV_VERSION-contrib.zip && \
+    unzip $OPENCV_VERSION-contrib.zip && \
+    mv /src/opencv_contrib-$OPENCV_VERSION $OPENCV_DIR/ && \
+    rm -rf /src/$OPENCV_VERSION-contrib.zip && \
+    mkdir -p $OPENCV_DIR/opencv-$OPENCV_VERSION/build && \
+    cd $OPENCV_DIR/opencv-$OPENCV_VERSION/build && \
+    cmake \
+    -D CMAKE_BUILD_TYPE=RELEASE \
+    -D BUILD_PYTHON_SUPPORT=ON \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D CUDA_CUDA_LIBRARY=/usr/local/cuda/lib64/stubs/libcuda.so \
+    -D INSTALL_C_EXAMPLES=ON \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D BUILD_PYTHON_SUPPORT=ON \
+    -D BUILD_NEW_PYTHON_SUPPORT=ON \
+    -D PYTHON_DEFAULT_EXECUTABLE=$(which python3) \
+    -D PYTHON_INCLUDE_DIR=/usr/include/python3.5 \
+    -D PYTHON_INCLUDE_DIR2=/usr/include/x86_64-linux-gnu/python3.5m \
+    -D PYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
+    -D PYTHON3_NUMPY_INCLUDE_DIRS=/usr/local/lib/python3.5/dist-packages/numpy/core/include/ \
+    -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_DIR/opencv_contrib-$OPENCV_VERSION/modules \
+    -D WITH_TBB=ON \
+    -D WITH_PTHREADS_PF=ON \
+    -D WITH_OPENNI=OFF \
+    -D WITH_OPENNI2=ON \
+    -D WITH_EIGEN=ON \
+    -D BUILD_DOCS=ON \
+    -D BUILD_TESTS=ON \
+    -D BUILD_PERF_TESTS=ON \
+    -D BUILD_EXAMPLES=ON \
+    -D WITH_OPENCL=$OPENCL_ENABLED \
+    -D WITH_CUDA=$CUDA_ENABLED \
+    -D WITH_CUBLAS=$CUDA_ENABLED \
+    -D USE_GStreamer=ON \
+    -D WITH_GDAL=ON \
+    -D WITH_CSTRIPES=ON \
+    -D WITH_NVCUVID=$CUDA_ENABLED \
+    -D ENABLE_FAST_MATH=1 \
+    -D CUDA_FAST_MATH=$CUDA_ENABLED \
+    -D BUILD_opencv_gpu=$CUDA_ENABLED \
+    -D BUILD_opencv_gpuarithm=$CUDA_ENABLED \
+    -D BUILD_opencv_gpubgsegm=$CUDA_ENABLED \
+    -D BUILD_opencv_gpucodec=$CUDA_ENABLED \
+    -D BUILD_opencv_gpufeatures2d=$CUDA_ENABLED \
+    -D BUILD_opencv_gpufilters=$CUDA_ENABLED \
+    -D BUILD_opencv_gpuimgproc=$CUDA_ENABLED \
+    -D BUILD_opencv_gpulegacy=$CUDA_ENABLED \
+    -D BUILD_opencv_gpuoptflow=$CUDA_ENABLED \
+    -D BUILD_opencv_gpustereo=$CUDA_ENABLED \
+    -D BUILD_opencv_gpuwarping=$CUDA_ENABLED \
+    -D WITH_OPENGL=ON \
+    -D WITH_QT=OFF \
+    -D WITH_IPP=ON \
+    -D WITH_V4L=ON .. && \
+    make -j8 && \
+    make install && \
+    ldconfig && \
+    rm -rf $OPENCV_DIR
+
+RUN pip3 install --upgrade pip ;\
+    python3 -V && pip3 -V ;\
+    pip3 --no-cache-dir install  http://download.pytorch.org/whl/cu90/torch-0.3.0.post4-cp35-cp35m-linux_x86_64.whl ;\
+    pip3 install torchvision ;\
+    apt-get autoremove && apt-get autoclean
+
+CMD ["/bin/bash"]

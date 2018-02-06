@@ -1,0 +1,7 @@
+FROM ubuntu:artful
+MAINTAINER Jermine.hu@qq.com
+RUN apt-get update -y && apt-get install -y python3 python3-pip graphviz ;\
+    pip3 install --upgrade pip ;\
+    python3 -V && pip3 -V ;\
+    pip3 --no-cache-dir install mxnet==1.0.0 graphviz ;\
+    apt-get autoremove && apt-get autoclean

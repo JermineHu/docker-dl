@@ -1,0 +1,9 @@
+FROM  nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
+MAINTAINER Jermine.hu@qq.com
+RUN apt-get update -y && apt-get install -y python3 python3-pip graphviz ;\
+    pip3 install --upgrade pip ;\
+    python3 -V && pip3 -V ;\
+    pip3 --no-cache-dir install mxnet-cu90==1.0.0 graphviz ;\
+    apt-get autoremove && apt-get autoclean
+
+CMD ["/bin/bash"]

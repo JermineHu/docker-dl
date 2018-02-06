@@ -1,0 +1,50 @@
+FROM  nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
+MAINTAINER Jermine.hu@qq.com
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+     python3 python3-pip \
+    cmake \
+    git \
+    libopencv-dev \
+    libprotobuf-dev \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# install the python
+RUN pip3 install --upgrade pip ;\
+    python3 -V && pip3 -V ;\
+    pip3 install --no-cache-dir \
+             flask \
+             future \
+             graphviz \
+             hypothesis \
+             jupyter \
+             matplotlib \
+             numpy \
+             protobuf \
+             pydot \
+             python-nvd3 \
+             pyyaml \
+             requests \
+             scikit-image \
+             scipy \
+             setuptools \
+             six \
+             tornado
+
+########## INSTALLATION STEPS ###################
+RUN git clone --branch master --recursive https://github.com/caffe2/caffe2.git
+RUN cd caffe2 && mkdir build && cd build \
+    && cmake .. \
+    -DCUDA_ARCH_NAME=Manual \
+    -DCUDA_ARCH_BIN="35 52 60 61" \
+    -DCUDA_ARCH_PTX="61" \
+    -DUSE_NNPACK=OFF \
+    -DUSE_ROCKSDB=OFF \
+    && make -j"$(nproc)" install \
+    && ldconfig \
+    && make clean \
+    && cd .. \
+    && rm -rf build
+
+CMD ["/bin/bash"]
