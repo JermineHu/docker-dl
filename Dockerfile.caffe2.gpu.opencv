@@ -22,7 +22,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         g++ \
         libopencv-dev \
         protobuf-compiler \
-        python-dev \
         python3 python3-pip \
         python-setuptools \
         unzip \
