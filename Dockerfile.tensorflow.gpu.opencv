@@ -31,11 +31,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /src && \
     cd /src && \
     mkdir -p $OPENCV_DIR && \
-    curl -LO https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip && \
+    wget https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip && \
     unzip $OPENCV_VERSION.zip && \
     mv /src/opencv-$OPENCV_VERSION/ $OPENCV_DIR/ && \
     rm -rf /src/$OPENCV_VERSION.zip && \
-    curl -L  https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.zip -O $OPENCV_VERSION-contrib.zip && \
+    wget https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.zip -O $OPENCV_VERSION-contrib.zip && \
     unzip $OPENCV_VERSION-contrib.zip && \
     mv /src/opencv_contrib-$OPENCV_VERSION $OPENCV_DIR/ && \
     rm -rf /src/$OPENCV_VERSION-contrib.zip && \
