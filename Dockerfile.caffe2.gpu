@@ -2,24 +2,21 @@ FROM  nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
 MAINTAINER Jermine.hu@qq.com
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-     python3 python3-pip \
+    python3 python3-pip \
     cmake \
     git \
-    python-setuptools \
     libopencv-dev \
-    libprotobuf-dev \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+    libprotobuf-dev ;\
+    apt-get autoremove && apt-get autoclean ;\
+    rm -rf /var/lib/apt/lists/*
 
 # install the python
 RUN pip3 install --upgrade pip ;\
     python3 -V && pip3 -V ;\
     pip3 install --no-cache-dir \
-             flask \
              future \
              graphviz \
              hypothesis \
-             jupyter \
              matplotlib \
              numpy \
              protobuf \
@@ -29,7 +26,6 @@ RUN pip3 install --upgrade pip ;\
              requests \
              scikit-image \
              scipy \
-             setuptools \
              six \
              tornado
 
