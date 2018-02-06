@@ -35,7 +35,7 @@ RUN mkdir -p /src && \
     unzip $OPENCV_VERSION.zip && \
     mv /src/opencv-$OPENCV_VERSION/ $OPENCV_DIR/ && \
     rm -rf /src/$OPENCV_VERSION.zip && \
-    curl -LO https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.zip -O $OPENCV_VERSION-contrib.zip && \
+    curl -L  https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.zip -O $OPENCV_VERSION-contrib.zip && \
     unzip $OPENCV_VERSION-contrib.zip && \
     mv /src/opencv_contrib-$OPENCV_VERSION $OPENCV_DIR/ && \
     rm -rf /src/$OPENCV_VERSION-contrib.zip && \
