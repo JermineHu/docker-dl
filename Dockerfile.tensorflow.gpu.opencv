@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates \
         cmake \
         g++ \
+        curl \
         libopencv-dev \
         protobuf-compiler \
         unzip \
