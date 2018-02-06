@@ -14,19 +14,38 @@ ENV OPENCL_ENABLED=OFF
 LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential \
-        ca-certificates \
-        git \
-        wget \
-        cmake \
-        g++ \
-        libopencv-dev \
-        protobuf-compiler \
-        python3 python3-pip \
-        python-setuptools \
-        unzip \
-        x264 \
-        && \
+     build-essential \
+     ca-certificates \
+     git \
+     wget \
+     cmake \
+     g++ \
+     libopencv-dev \
+     protobuf-compiler \
+     python3 python3-pip \
+     python-setuptools \
+     # libgflags-dev \
+     # libgoogle-glog-dev \
+     # libgtest-dev \
+     # libiomp-dev \
+     # libleveldb-dev \
+     # liblmdb-dev \
+     # libopencv-dev \
+     # libopenmpi-dev \
+     # libprotobuf-dev \
+     # libsnappy-dev \
+     # openmpi-bin \
+     # openmpi-doc \
+     # protobuf-compiler \
+     # python-dev \
+     # python-numpy \
+     # python-pip \
+     # python-pydot \
+     # python-setuptools \
+     # python-scipy \
+     unzip \
+     x264 \
+     && \
     apt-get autoremove && apt-get autoclean ;\
     rm -rf /var/lib/apt/lists/*
 
@@ -131,5 +150,7 @@ RUN cd caffe2 && mkdir build && cd build \
     && make clean \
     && cd .. \
     && rm -rf build
+
+ENV PYTHONPATH /usr/local
 
 CMD ["/bin/bash"]

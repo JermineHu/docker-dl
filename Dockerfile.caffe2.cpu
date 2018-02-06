@@ -1,43 +1,32 @@
 FROM ubuntu:artful
 MAINTAINER Jermine.hu@qq.com
+
+# caffe2 install with cpu support
+########## REQUIRED DEPENDENCIES ################
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     cmake \
+    curl \
     git \
-    libopencv-dev \
+    libgoogle-glog-dev \
     libprotobuf-dev \
-    python3 python3-pip \
-    python-setuptools ;\
-    apt-get autoremove && apt-get autoclean ;\
-    rm -rf /var/lib/apt/lists/*
+    python-pip \
+    protobuf-compiler \
+    python-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# install the python
-RUN pip3 install --upgrade pip ;\
-    python3 -V && pip3 -V ;\
-    pip3 install --no-cache-dir \
-             setuptools \
-             future \
-             graphviz \
-             hypothesis \
-             matplotlib \
-             numpy \
-             protobuf \
-             pydot \
-             python-nvd3 \
-             pyyaml \
-             requests \
-             scikit-image \
-             scipy \
-             six \
-             tornado
+# Don't use deb package because trusty's pip is too old for --no-cache-dir
+RUN curl -O https://bootstrap.pypa.io/get-pip.py \
+    && python get-pip.py \
+    && rm get-pip.py
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+RUN pip install --no-cache-dir future hypothesis numpy protobuf six
 
 ########## INSTALLATION STEPS ###################
 RUN git clone --branch master --recursive https://github.com/caffe2/caffe2.git
 RUN cd caffe2 && mkdir build && cd build \
     && cmake .. \
-    -DCUDA_ARCH_NAME=Manual \
-    -DCUDA_ARCH_BIN="35 52 60 61" \
-    -DCUDA_ARCH_PTX="61" \
+    -DUSE_CUDA=OFF \
     -DUSE_NNPACK=OFF \
     -DUSE_ROCKSDB=OFF \
     && make -j"$(nproc)" install \
@@ -45,3 +34,5 @@ RUN cd caffe2 && mkdir build && cd build \
     && make clean \
     && cd .. \
     && rm -rf build
+
+CMD ["/bin/bash"]
