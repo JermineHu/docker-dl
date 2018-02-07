@@ -1,6 +1,5 @@
 FROM ubuntu:artful
 MAINTAINER Jermine.hu@qq.com
-
 # caffe2 install with cpu support
 ########## REQUIRED DEPENDENCIES ################
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -12,19 +11,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libprotobuf-dev \
     python-pip \
     protobuf-compiler \
-    python-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Don't use deb package because trusty's pip is too old for --no-cache-dir
-RUN curl -O https://bootstrap.pypa.io/get-pip.py \
+    python-dev ;\
+    curl -O https://bootstrap.pypa.io/get-pip.py \
     && python get-pip.py \
-    && rm get-pip.py
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
-RUN pip install --no-cache-dir future hypothesis numpy protobuf six
-
-########## INSTALLATION STEPS ###################
-RUN git clone --branch master --recursive https://github.com/caffe2/caffe2.git
-RUN cd caffe2 && mkdir build && cd build \
+    && rm get-pip.p ;\
+    pip install --no-cache-dir --upgrade pip setuptools wheel ;\
+    pip install --no-cache-dir future hypothesis numpy protobuf six ;\
+    git clone --branch master --recursive https://github.com/caffe2/caffe2.git ;\
+    cd caffe2 && mkdir build && cd build \
     && cmake .. \
     -DUSE_CUDA=OFF \
     -DUSE_NNPACK=OFF \
@@ -33,6 +27,7 @@ RUN cd caffe2 && mkdir build && cd build \
     && ldconfig \
     && make clean \
     && cd .. \
-    && rm -rf build
-
+    && rm -rf build ;\
+    apt-get autoremove && apt-get autoclean ;\
+    rm -rf /var/lib/apt/lists/* ;\
 CMD ["/bin/bash"]

@@ -1,7 +1,6 @@
 FROM  nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
 MAINTAINER Jermine.hu@qq.com
 # caffe2 install with gpu support
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     cmake \
@@ -25,10 +24,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-pydot \
     python-setuptools \
     python-scipy \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    wget ;\
+    pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir \
     flask \
     future \
@@ -46,11 +43,9 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
     scipy \
     setuptools \
     six \
-    tornado
-
-########## INSTALLATION STEPS ###################
-RUN git clone --branch master --recursive https://github.com/caffe2/caffe2.git
-RUN cd caffe2 && mkdir build && cd build \
+    tornado ;\
+    git clone --branch master --recursive https://github.com/caffe2/caffe2.git ;\
+    cd caffe2 && mkdir build && cd build \
     && cmake .. \
     -DCUDA_ARCH_NAME=Manual \
     -DCUDA_ARCH_BIN="35 52 60 61" \
@@ -61,7 +56,8 @@ RUN cd caffe2 && mkdir build && cd build \
     && ldconfig \
     && make clean \
     && cd .. \
-    && rm -rf build
-
+    && rm -rf build ;\
+    apt-get autoremove && apt-get autoclean ;\
+    rm -rf /var/lib/apt/lists/* ;\
 ENV PYTHONPATH /usr/local
 CMD ["/bin/bash"]

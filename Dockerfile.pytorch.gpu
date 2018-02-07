@@ -1,10 +1,11 @@
 FROM  nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
 MAINTAINER Jermine.hu@qq.com
-RUN apt-get update -y && apt-get install -y python3 python3-pip ;\
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    python3 python3-pip ;\
     pip3 install --upgrade pip ;\
     python3 -V && pip3 -V ;\
     pip3 --no-cache-dir install  http://download.pytorch.org/whl/cu90/torch-0.3.0.post4-cp35-cp35m-linux_x86_64.whl ;\
     pip3 install torchvision ;\
-    apt-get autoremove && apt-get autoclean
-
+    apt-get autoremove && apt-get autoclean ;\
+    rm -rf /var/lib/apt/lists/* ;\
 CMD ["/bin/bash"]
