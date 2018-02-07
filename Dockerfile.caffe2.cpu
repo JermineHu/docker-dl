@@ -29,5 +29,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && cd .. \
     && rm -rf build ;\
     apt-get autoremove && apt-get autoclean ;\
-    rm -rf /var/lib/apt/lists/* ;\
+    rm -rf /var/lib/apt/lists/*
 CMD ["/bin/bash"]
