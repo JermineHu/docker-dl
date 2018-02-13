@@ -1,4 +1,4 @@
-FROM  nvidia/cuda:8.0-cudnn7-runtime-ubuntu16.04
+FROM  nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
 MAINTAINER Jermine.hu@qq.com
 ARG PYTHON_VERSION=3.6
 ENV OPENCV_DIR /opt/opencv
