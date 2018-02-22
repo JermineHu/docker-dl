@@ -1,10 +1,10 @@
 FROM  jermine/dl:gpu.opencv
 MAINTAINER Jermine.hu@qq.com
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    setuptools \
     python3 python3-pip ;\
     pip3 install --upgrade pip ;\
     python3 -V && pip3 -V ;\
+    pip3  --no-cache-dir install setuptools ;\
     pip3 --no-cache-dir install  http://download.pytorch.org/whl/cu90/torch-0.3.0.post4-cp35-cp35m-linux_x86_64.whl ;\
     pip3 install torchvision ;\
     apt-get autoremove && apt-get autoclean ;\

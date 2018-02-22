@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libprotobuf-dev \
     python-pip \
     protobuf-compiler \
+    python-setuptools \
     python-dev ;\
     curl -O https://bootstrap.pypa.io/get-pip.py \
     && python get-pip.py \
