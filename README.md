@@ -8,7 +8,7 @@ https://hub.docker.com/r/jermine/dl/
 https://github.com/JermineHu/docker-dl
 
 # Used
-*** You can switch the environments by docker images tags! ***
+**You can switch the environments by docker images tags!**
 #### Checked nvidia driver info 
 ```
 docker run --runtime=nvidia --rm -it jermine/dl:tensorflow.gpu nvidia-smi
