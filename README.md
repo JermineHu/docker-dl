@@ -1,5 +1,5 @@
 # docker-dl
-Dockerfile for DeepLearn (Mxnet , Pytorch , Caffe2 , Tensorflow)
+Dockerfile for DeepLearn (Mxnet , Pytorch , Caffe2 , Tensorflow). This repository recommends developers to use, which covers cuda9.0, cudnn7.0, tensorflow1.5, opencv3.4, pytorch0.3, mxnet1.0 .
 
 #### The docker registry is :
 https://hub.docker.com/r/jermine/dl/
