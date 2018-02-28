@@ -54,4 +54,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get autoremove && apt-get autoclean ;\
     rm -rf /var/lib/apt/lists/*
 ENV PYTHONPATH /usr/local
-CMD ["/bin/bash"]

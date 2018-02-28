@@ -7,4 +7,4 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     pip3 --no-cache-dir install mxnet-cu90==1.0.0 graphviz ;\
     apt-get autoremove && apt-get autoclean ;\
     rm -rf /var/lib/apt/lists/*
-CMD ["/bin/bash"]
+

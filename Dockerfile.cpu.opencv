@@ -1,15 +1,13 @@
-FROM  nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
+FROM ubuntu:artful
 MAINTAINER Jermine.hu@qq.com
 ENV OPENCV_DIR /opt/opencv
 ENV LIBGPUARRAY_DIR /opt/libgpuarray
 ENV NUM_CORES 8
 ENV NB_UID 1000
-ENV CUDNN_VERSION 7
 ARG CLONE_TAG=1.0
 ENV OPENCV_VERSION=3.4.0
-ENV CUDA_ENABLED=ON
 ENV OPENCL_ENABLED=OFF
-LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
+
 # build and install opencv
 RUN apt-get update && apt-get install -y --no-install-recommends \
      build-essential \
@@ -58,25 +56,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     -D BUILD_PERF_TESTS=ON \
     -D BUILD_EXAMPLES=ON \
     -D WITH_OPENCL=$OPENCL_ENABLED \
-    -D WITH_CUDA=$CUDA_ENABLED \
-    -D WITH_CUBLAS=$CUDA_ENABLED \
     -D USE_GStreamer=ON \
     -D WITH_GDAL=ON \
     -D WITH_CSTRIPES=ON \
-    -D WITH_NVCUVID=$CUDA_ENABLED \
     -D ENABLE_FAST_MATH=1 \
-    -D CUDA_FAST_MATH=$CUDA_ENABLED \
-    -D BUILD_opencv_gpu=$CUDA_ENABLED \
-    -D BUILD_opencv_gpuarithm=$CUDA_ENABLED \
-    -D BUILD_opencv_gpubgsegm=$CUDA_ENABLED \
-    -D BUILD_opencv_gpucodec=$CUDA_ENABLED \
-    -D BUILD_opencv_gpufeatures2d=$CUDA_ENABLED \
-    -D BUILD_opencv_gpufilters=$CUDA_ENABLED \
-    -D BUILD_opencv_gpuimgproc=$CUDA_ENABLED \
-    -D BUILD_opencv_gpulegacy=$CUDA_ENABLED \
-    -D BUILD_opencv_gpuoptflow=$CUDA_ENABLED \
-    -D BUILD_opencv_gpustereo=$CUDA_ENABLED \
-    -D BUILD_opencv_gpuwarping=$CUDA_ENABLED \
     -D WITH_OPENGL=ON \
     -D WITH_QT=OFF \
     -D WITH_IPP=ON \

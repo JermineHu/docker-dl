@@ -1,10 +1,8 @@
-FROM ubuntu:artful
+FROM  jermine/dl:cpu.opencv
 MAINTAINER Jermine.hu@qq.com
 # caffe2 install with cpu support
 ########## REQUIRED DEPENDENCIES ################
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    cmake \
     curl \
     git \
     libgoogle-glog-dev \
