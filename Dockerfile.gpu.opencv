@@ -84,4 +84,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make -j8 && \
     make install && \
     ldconfig && \
-    rm -rf $OPENCV_DIR
+    rm -rf $OPENCV_DIR ;\
+    apt-get autoremove && apt-get autoclean ;\
+    rm -rf /var/lib/apt/lists/*
