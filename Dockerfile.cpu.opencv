@@ -1,2 +1,2 @@
-FROM daocloud.io/jermine/cpu-opencv
+FROM daocloud.io/jermine/opencv
 MAINTAINER Jermine.hu@qq.com
