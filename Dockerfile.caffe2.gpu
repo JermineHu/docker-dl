@@ -1,4 +1,4 @@
-FROM  nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
+FROM  nvidia/cuda:9.1-cudnn7-runtime-ubuntu16.04
 MAINTAINER Jermine.hu@qq.com
 # caffe2 install with gpu support
 RUN apt-get update && apt-get install -y --no-install-recommends \
