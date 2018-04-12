@@ -1,6 +1,6 @@
 FROM  jermine/dl:gpu.opencv
 MAINTAINER Jermine.hu@qq.com
-ENV TENSORFLOW_VERSION 1.6.0
+ENV TENSORFLOW_VERSION 1.7.0
 RUN apt-get update -y  && apt-get install -y --no-install-recommends python3 python3-pip  protobuf-compiler;\
     pip3 install --upgrade pip ;\
     python3 -V && pip3 -V ;\
