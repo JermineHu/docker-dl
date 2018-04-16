@@ -1,4 +1,4 @@
-FROM  nvidia/cuda:9.1-cudnn7-runtime-ubuntu16.04
+FROM  nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
 MAINTAINER Jermine.hu@qq.com
 ENV TENSORFLOW_VERSION 1.7.0
 RUN apt-get update -y  && apt-get install -y --no-install-recommends python3 python3-pip  protobuf-compiler;\
