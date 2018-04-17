@@ -2,7 +2,7 @@ FROM  jermine/dl:cpu.opencv
 MAINTAINER Jermine.hu@qq.com
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
     python3 python3-pip graphviz ;\
-    pip3 install --upgrade pip ;\
+    pip3 install --upgrade pip==9.0.3 ;\
     python3 -V && pip3 -V ;\
     pip3 --no-cache-dir install mxnet graphviz ;\
     apt-get autoremove && apt-get autoclean ;\
