@@ -1,6 +1,6 @@
 FROM  jermine/dl:gpu.opencv
 MAINTAINER Jermine.hu@qq.com
-ENV TENSORFLOW_VERSION 1.7.0
+ENV TENSORFLOW_VERSION 1.8.0
 RUN apt-get update -y  && apt-get install -y --no-install-recommends python3 python3-pip  protobuf-compiler python3-tk ;\
     apt-get install -y --allow-downgrades libcudnn7=7.0.5.15-1+cuda9.0 ;\
     pip3 install --upgrade pip==9.0.3 ;\
